@@ -1,0 +1,373 @@
+TASK #9: RUN LOOP — ASTRA DELIVERY
+
+This is a handoff document, not a Unity source file. The four complete C# files are included below and also supplied separately with their repository paths.
+
+Approved behavior
+Enter Play Mode -> Start Run -> configured starting floor -> Next Floor increments by one -> Die shows Run Over and floor reached -> Restart immediately begins a new run at the configured starting floor.
+
+Assumptions and scope
+- Unity 6 LTS with URP. Use the newest Unity 6 LTS when the owner creates the project, and record the exact version in docs/DECISIONS.md. This delivery does not change the project's Unity version.
+- Unity UI (uGUI), TextMeshPro, and the new Input System. This skeleton is tested by mouse clicks; keyboard/gamepad focus handling is not implemented.
+- One scene, one RunManager, one RunUI. Both controller objects remain active throughout the run.
+- The floor is a counter. Floor loading, player health, enemies, saving, and progression between runs are future integrations.
+- Death changes RunState; it does not globally change Time.timeScale. Future gameplay components should respect RunState and the Changed event.
+- Restart resets this skeleton's run state and floor counter. It does not reload the scene or reset future gameplay objects.
+- RunSettings is configuration only. RunManager owns progress and exposes read-only State and CurrentFloor properties plus a Changed event. CurrentFloor is 0 before the first run, while the HUD is hidden.
+- Scripts connect button listeners automatically. Leave Inspector Button On Click() lists empty.
+- No Unity-generated assets, scenes, .meta files, or ProjectSettings are supplied. Unity will generate the appropriate files as the owner performs setup.
+
+EDITOR SETUP
+
+1. Create/open the owner's Unity 6 LTS project using the Universal 3D template. In Window > Package Manager, make sure Unity UI (com.unity.ugui) and Input System (com.unity.inputsystem) are installed. Use package versions compatible with that Editor.
+2. In Edit > Project Settings > Player > Other Settings, set Active Input Handling to Input System Package (New). Allow the Editor to restart if requested. Import TMP Essential Resources through Window > TextMeshPro > Import TMP Essential Resources, or accept the import prompt when creating the first TMP UI element.
+3. Copy the four scripts into their exact Assets/_Game/Scripts/Core and Assets/_Game/Scripts/UI paths. Wait for compilation to finish. Create Assets/_Game/Data/Core and Assets/_Game/Scenes folders if absent.
+4. In Assets/_Game/Data/Core, use Create > Tower > Run Settings. Name the asset DefaultRunSettings and set Starting Floor to 1. Its resulting path is Assets/_Game/Data/Core/DefaultRunSettings.asset.
+5. Create a new scene, keep its camera and light if present, and save it as Assets/_Game/Scenes/RunLoopTest.unity. Create a root empty GameObject named RunManager. Add the RunManager component and drag DefaultRunSettings into Settings.
+6. Create a UI > Canvas. Set Render Mode to Screen Space - Overlay. Keep its Graphic Raycaster. On Canvas Scaler, set UI Scale Mode to Scale With Screen Size, Reference Resolution to 1920 x 1080, and Match to 0.5. Add RunUI to this Canvas, not to one of the panels it hides.
+7. Keep exactly one EventSystem. It needs an EventSystem component and an Input System UI Input Module. Replace/remove the legacy Standalone Input Module if present. Use the module's default UI actions; Point and Left Click must be assigned. If its action slots are empty, use Assign Default Actions in the Inspector. No custom gameplay input-action asset is required.
+8. Under Canvas, create three UI > Panel objects named StartPanel, RunningPanel, and RunOverPanel. Stretch each across the Canvas with all four offsets at 0. Use a dark panel Image color, for example #151C25 with full alpha. Create the following children using UI > Text - TextMeshPro and UI > Button - TextMeshPro:
+
+Canvas (RunUI)
+  StartPanel
+    Title
+    StartButton
+  RunningPanel
+    FloorText
+    NextFloorButton
+    DieButton
+  RunOverPanel
+    Title
+    FloorReachedText
+    RestartButton
+
+Each Button includes its automatically created TMP label child. Keep that child; edit its text.
+
+9. For each direct child of a panel, set Rect Transform anchors and pivot to center (0.5, 0.5), Pos X to 0, and the following values. Use centered white 36-point text for standalone labels. Use black 28-point text on the default light buttons. Leave button label children stretched to their buttons.
+
+Object                             Pos Y   Width   Height   Text
+StartPanel/Title                     110     700      80     Tower Run
+StartPanel/StartButton                 0     320      64     Start Run
+RunningPanel/FloorText               130     700      80     Floor
+RunningPanel/NextFloorButton          20     320      64     Next Floor
+RunningPanel/DieButton               -70     320      64     Die (Test)
+RunOverPanel/Title                   150     700      80     Run Over
+RunOverPanel/FloorReachedText         50     700      80     Floor reached
+RunOverPanel/RestartButton           -60     320      64     Restart
+
+10. Wire the Canvas's RunUI Inspector fields as follows. Drag scene objects/components, not .cs files:
+
+Run Manager        -> root RunManager component
+Start Panel        -> Canvas/StartPanel
+Running Panel      -> Canvas/RunningPanel
+Run Over Panel     -> Canvas/RunOverPanel
+Floor Text         -> RunningPanel/FloorText's TextMeshProUGUI component
+Floor Reached Text -> RunOverPanel/FloorReachedText's TextMeshProUGUI component
+Start Button       -> StartPanel/StartButton's Button component
+Next Floor Button  -> RunningPanel/NextFloorButton's Button component
+Die Button         -> RunningPanel/DieButton's Button component
+Restart Button     -> RunOverPanel/RestartButton's Button component
+
+Keep Floor Label = Floor and Floor Reached Label = Floor reached, or customize them in the Inspector. Leave all four buttons' On Click() lists empty because RunUI binds them in code.
+
+11. Leave Canvas and root RunManager active. Set StartPanel active and the other panels inactive for a tidy initial scene view; RunUI manages them in Play Mode. Save the scene.
+
+MANUAL TESTS
+
+1. Enter Play Mode with Starting Floor = 1. Expect only Start Run and its title. The Console should have no errors. On the RunManager component's context menu (three dots/right-click header), choose Advance Floor, Die, and Restart Run before starting. Expect no change.
+2. Click Start Run. Expect Floor 1, Next Floor, and Die (Test); the start panel disappears.
+3. Click Next Floor twice. Expect Floor 2, then Floor 3. Click Die (Test). Expect Run Over, Floor reached 3, and Restart; the running panel disappears.
+4. While run over, invoke Advance Floor and Die from the RunManager component context menu. Expect Floor reached 3 to remain unchanged.
+5. Click Restart. Expect Floor 1 immediately, without a second Start click. Repeat the climb/die/restart cycle and confirm the result is consistent.
+6. During a running game, disable only the RunUI component's checkbox on Canvas. Advance Floor once from RunManager's context menu; the displayed label should remain stale while RunUI is disabled. Re-enable RunUI; the label should catch up. Click Next Floor once; the counter should advance by exactly one. Repeat the disable/re-enable cycle to check that listeners are not duplicated.
+7. Stop Play Mode. Set DefaultRunSettings.Starting Floor to 5. Re-enter Play Mode and click Start Run: expect Floor 5. Advance once, die, and expect Floor reached 6. Restart: expect Floor 5. The settings asset must still contain 5, not the current floor. Stop Play Mode and restore Starting Floor to 1.
+8. Enter Play Mode again. Expect the Start screen and a fresh run when started. Confirm the Console is clear.
+
+If a button does not respond, check EventSystem + Input System UI Input Module, default Point/Left Click actions, the Canvas Graphic Raycaster, and that the Game view has focus. If RunUI reports missing references, stop Play Mode, assign all ten required references, make sure its component is enabled, and try again. If RunManager reports missing settings, assign DefaultRunSettings before starting.
+
+VERIFICATION PERFORMED
+- All four source files compiled successfully against the locally installed Unity 6000.6.10f1 engine, Unity UI, and TextMeshPro assemblies. This was a library compilation check, not a project upgrade or validation of the owner's exact LTS installation.
+- 31 assertions passed in a standalone C# harness using minimal Unity API doubles. These covered run transitions, rejected commands, immutable shared configuration, overflow protection, UI states, configuration errors, and listener cleanup/reconnection.
+- No Unity Editor Play Mode, visual-layout, input-module, URP rendering, or player-build test was performed. The owner must run the manual tests in the created LTS project.
+
+PULL REQUEST
+Branch: astra/run-loop
+Title: Add the configurable run-loop skeleton (#9)
+
+What changed
+Added RunState, RunSettings, RunManager, and RunUI. A run starts on demand, advances its floor counter, ends on death, displays the reached floor, and immediately restarts from the configured starting floor. UI listeners are removed when the UI is disabled, and invalid lifecycle commands are ignored.
+
+How to test
+Set up RunLoopTest with a RunSettings asset, RunManager, Canvas/RunUI, three panels, four buttons, and an Input System EventSystem using the supplied Editor instructions. Enter Play Mode; Start -> Floor 1 -> Next Floor twice -> Die -> Floor reached 3 -> Restart -> Floor 1. Repeat with Starting Floor = 5 and disable/re-enable RunUI to verify refresh and single-click advancement. Compilation against installed Unity 6 libraries and 31 standalone logic assertions passed; target-LTS Editor testing is pending.
+
+Unfinished
+Player health/death integration, room loading, gameplay object reset, saving/metaprogression, keyboard/gamepad menu focus, and art. The owner creates the Unity scene/settings asset and runs Editor tests.
+
+FOR CLAUDE TO RECORD
+- Commit the four source files on astra/run-loop and open a PR; the owner merges.
+- Assign task #9 to astra. Keep it in progress until the PR exists, then mark it in review. Do not mark it done before owner testing/merge.
+- Task #9 touches Assets/_Game/Scripts/Core/RunState.cs, RunSettings.cs, RunManager.cs, and Assets/_Game/Scripts/UI/RunUI.cs. The owner manually creates Assets/_Game/Scenes/RunLoopTest.unity and Assets/_Game/Data/Core/DefaultRunSettings.asset; no prefab changes are supplied.
+- In docs/DECISIONS.md record the owner's approved behavior: explicit Start, configurable initial floor, advancement only while running, death retains reached floor, Restart immediately begins a new run at the configured floor. Record the approved placeholder UI/input choice: uGUI + TextMeshPro with the new Input System, initially mouse-operated.
+- Add this handoff log line, reconciling it with any newer TASKS.md edits rather than overwriting them:
+
+2026-11-27 · astra · #9 · Delivered four complete run-loop scripts with Editor setup/tests; Unity-library compilation and 31 standalone logic checks passed; Editor playtest pending · Claude to commit on astra/run-loop and open PR; owner to create the test scene/settings asset and playtest before merge.
+
+REFERENCE
+Unity Input System UI setup: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.17/manual/UISupport.html
+
+COMPLETE SOURCE FILES
+
+REPO PATH: Assets/_Game/Scripts/Core/RunState.cs
+```csharp
+namespace Tower.Core
+{
+    public enum RunState
+    {
+        NotStarted,
+        Running,
+        RunOver
+    }
+}
+```
+
+REPO PATH: Assets/_Game/Scripts/Core/RunSettings.cs
+```csharp
+using UnityEngine;
+
+namespace Tower.Core
+{
+    [CreateAssetMenu(fileName = "RunSettings", menuName = "Tower/Run Settings")]
+    public sealed class RunSettings : ScriptableObject
+    {
+        [SerializeField, Min(1)] private int _startingFloor = 1;
+
+        public int StartingFloor => Mathf.Max(1, _startingFloor);
+
+        private void OnValidate()
+        {
+            _startingFloor = Mathf.Max(1, _startingFloor);
+        }
+    }
+}
+```
+
+REPO PATH: Assets/_Game/Scripts/Core/RunManager.cs
+```csharp
+using System;
+using UnityEngine;
+
+namespace Tower.Core
+{
+    [DisallowMultipleComponent]
+    public sealed class RunManager : MonoBehaviour
+    {
+        [SerializeField] private RunSettings _settings;
+
+        private RunState _state = RunState.NotStarted;
+        private int _currentFloor;
+
+        public RunState State => _state;
+        public int CurrentFloor => _currentFloor;
+
+        // Raised after both State and CurrentFloor are ready to read.
+        public event Action Changed;
+
+        [ContextMenu("Start Run")]
+        public void StartRun()
+        {
+            if (!Application.isPlaying || !isActiveAndEnabled || _state != RunState.NotStarted)
+            {
+                return;
+            }
+
+            BeginRun();
+        }
+
+        [ContextMenu("Advance Floor")]
+        public void AdvanceFloor()
+        {
+            if (!Application.isPlaying || !isActiveAndEnabled || _state != RunState.Running)
+            {
+                return;
+            }
+
+            if (_currentFloor == int.MaxValue)
+            {
+                Debug.LogWarning("The floor counter has reached its numeric limit.", this);
+                return;
+            }
+
+            _currentFloor++;
+            Changed?.Invoke();
+        }
+
+        [ContextMenu("Die")]
+        public void Die()
+        {
+            if (!Application.isPlaying || !isActiveAndEnabled || _state != RunState.Running)
+            {
+                return;
+            }
+
+            _state = RunState.RunOver;
+            Changed?.Invoke();
+        }
+
+        [ContextMenu("Restart Run")]
+        public void RestartRun()
+        {
+            if (!Application.isPlaying || !isActiveAndEnabled || _state != RunState.RunOver)
+            {
+                return;
+            }
+
+            BeginRun();
+        }
+
+        private void BeginRun()
+        {
+            if (_settings == null)
+            {
+                Debug.LogError("RunManager needs a RunSettings asset. Assign Settings in the Inspector.", this);
+                return;
+            }
+
+            _currentFloor = _settings.StartingFloor;
+            _state = RunState.Running;
+            Changed?.Invoke();
+        }
+    }
+}
+```
+
+REPO PATH: Assets/_Game/Scripts/UI/RunUI.cs
+```csharp
+using TMPro;
+using Tower.Core;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Tower.UI
+{
+    [DisallowMultipleComponent]
+    public sealed class RunUI : MonoBehaviour
+    {
+        [Header("Run")]
+        [SerializeField] private RunManager _runManager;
+
+        [Header("Panels")]
+        [SerializeField] private GameObject _startPanel;
+        [SerializeField] private GameObject _runningPanel;
+        [SerializeField] private GameObject _runOverPanel;
+
+        [Header("Text")]
+        [SerializeField] private TMP_Text _floorText;
+        [SerializeField] private TMP_Text _floorReachedText;
+        [SerializeField] private string _floorLabel = "Floor";
+        [SerializeField] private string _floorReachedLabel = "Floor reached";
+
+        [Header("Buttons")]
+        [SerializeField] private Button _startButton;
+        [SerializeField] private Button _nextFloorButton;
+        [SerializeField] private Button _dieButton;
+        [SerializeField] private Button _restartButton;
+
+        private void OnEnable()
+        {
+            if (!HasRequiredReferences())
+            {
+                Debug.LogError("RunUI needs its manager, three panels, two text fields, and four buttons assigned.", this);
+                enabled = false;
+                return;
+            }
+
+            _runManager.Changed += Refresh;
+            _startButton.onClick.AddListener(StartRun);
+            _nextFloorButton.onClick.AddListener(AdvanceFloor);
+            _dieButton.onClick.AddListener(Die);
+            _restartButton.onClick.AddListener(RestartRun);
+            Refresh();
+        }
+
+        private void OnDisable()
+        {
+            if (_runManager != null)
+            {
+                _runManager.Changed -= Refresh;
+            }
+
+            if (_startButton != null)
+            {
+                _startButton.onClick.RemoveListener(StartRun);
+            }
+
+            if (_nextFloorButton != null)
+            {
+                _nextFloorButton.onClick.RemoveListener(AdvanceFloor);
+            }
+
+            if (_dieButton != null)
+            {
+                _dieButton.onClick.RemoveListener(Die);
+            }
+
+            if (_restartButton != null)
+            {
+                _restartButton.onClick.RemoveListener(RestartRun);
+            }
+        }
+
+        private bool HasRequiredReferences()
+        {
+            return _runManager != null
+                && _startPanel != null
+                && _runningPanel != null
+                && _runOverPanel != null
+                && _floorText != null
+                && _floorReachedText != null
+                && _startButton != null
+                && _nextFloorButton != null
+                && _dieButton != null
+                && _restartButton != null;
+        }
+
+        private void Refresh()
+        {
+            bool notStarted = _runManager.State == RunState.NotStarted;
+            bool running = _runManager.State == RunState.Running;
+            bool runOver = _runManager.State == RunState.RunOver;
+
+            _floorText.text = $"{_floorLabel} {_runManager.CurrentFloor}";
+            _floorReachedText.text = $"{_floorReachedLabel} {_runManager.CurrentFloor}";
+
+            _startButton.interactable = notStarted;
+            _nextFloorButton.interactable = running;
+            _dieButton.interactable = running;
+            _restartButton.interactable = runOver;
+
+            _startPanel.SetActive(notStarted);
+            _runningPanel.SetActive(running);
+            _runOverPanel.SetActive(runOver);
+        }
+
+        private void StartRun()
+        {
+            _runManager.StartRun();
+        }
+
+        private void AdvanceFloor()
+        {
+            _runManager.AdvanceFloor();
+        }
+
+        private void Die()
+        {
+            _runManager.Die();
+        }
+
+        private void RestartRun()
+        {
+            _runManager.RestartRun();
+        }
+    }
+}
+```
