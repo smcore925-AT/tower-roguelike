@@ -19,6 +19,13 @@ Crazy ninja moments: slash, run along walls, land precise arrows on weak points,
 
 ## Owner vision (2026-11-27)
 
+### Setting and tone
+
+- **A tower suddenly appears out of nowhere**, and it's up to the hero to clear it.
+- **Outside the tower, the hero is nobody special.** Inside, he's THE hero. Two options, owner to choose:
+  - **Comedy:** outside the tower he's an ordinary guy with a day job (e.g. a pizza delivery driver). The contrast is the joke.
+  - **Simple:** a camp at the foot of the tower, the hero looking up at it.
+
 ### Weapons and levelling
 
 - The player starts with a **sword** and a **short bow**.
@@ -28,6 +35,7 @@ Crazy ninja moments: slash, run along walls, land precise arrows on weak points,
 
 ### Tower structure
 
+- **100 floors** in total. Only the early floors need designing now.
 - **Every 10th floor is a boss floor.** Floors in between each have a different environment, building toward the boss.
 - **Floors 1–9:** gentle, natural places: fields, forest, meadows. **Floor 10:** dark forest boss.
 - Later bands of 10 floors get new themes (to be designed).
@@ -56,11 +64,13 @@ Crazy ninja moments: slash, run along walls, land precise arrows on weak points,
 | | Return to camp | Die |
 |---|---|---|
 | Weapon, its level and unlocked moves | Kept | Kept |
-| Effects applied to the weapon during the run | *Open question* | Lost |
-| Materials gathered | Kept (stored at camp) | **Partially** recovered |
+| Effects applied to the weapon during the run | Lost (the tower's power fades outside it) | Lost |
+| Materials gathered | Kept (stored at camp) | **Partially** recovered (amount to be decided) |
+| Gear found during the run | Kept (stored at camp) | Lost |
 | Other items found during the run | Kept (stored at camp) | Lost |
 
 - This creates the core tension: **push one more floor, or bank what you have?** Sometimes going back is the smart move.
+- **Why run effects fade:** the tower's power only works inside the tower. Outside, the weapon is just a weapon again; its level and unlocked moves stay.
 
 ### Gear and inventory
 
@@ -68,12 +78,17 @@ Crazy ninja moments: slash, run along walls, land precise arrows on weak points,
 - Example: a heavy knight build moves slower and dodges less far, but tanks harder hits and doesn't get sent flying.
 - **Heavy is still epic.** The knight can wall run and do everything the ninja can; weight changes the style. Ideas **(proposal)**: a heavy wall run is shorter but ends in a crushing wall-jump slam; heavy dashes become shoulder charges that knock minions aside and break props; a heavy landing sends out a shockwave.
 - **Bag weight:** carrying more healing items or mana makes the bag heavier, which affects movement.
+- **Gear stored at camp** can be **modified, salvaged or levelled up**, then taken on the next climb.
 
 ### Gathering and crafting
 
 - Gather **materials and herbs** on floors.
 - Use them to **craft and upgrade equipment**, make healing items, and **research** (details to be designed).
 - Craft upgrades to carry more healing or mana, at the cost of extra weight.
+
+### Abilities and mana
+
+- **Mana powers abilities.** Details not designed yet. **(proposal)** Abilities could be tied to weapons and unlocked through weapon levels, so they fit the "your weapon is your progression" idea.
 
 ### Roguelike elements
 
@@ -89,10 +104,6 @@ The full vision is a big game. Build it in layers so there's always something pl
 4. **Gear and weight:** inventory, gear that changes movement and knockback, bag weight.
 5. **Gathering and crafting**, shops, research.
 6. **More floors, bosses and weapons.**
-
-### Abilities and mana
-
-- **Mana powers abilities.** Details not designed yet. **(proposal)** Abilities could be tied to weapons and unlocked through weapon levels, so they fit the "your weapon is your progression" idea.
 
 ## Art direction (decided 2026-11-27)
 
@@ -112,8 +123,6 @@ The full vision is a big game. Build it in layers so there's always something pl
 
 ## Open questions
 
-- **Returning to camp:** are effects applied to the weapon during the run kept or lost?
 - **How much is "partially" recovered** on death? (e.g. half of materials, or a random portion)
-- **Gear found during a run:** can it be stored at camp and brought on the next climb?
-- **How many floors in total?** (e.g. 30, 50, 100)
+- **Setting:** comedy (ordinary day job outside the tower) or simple camp at the tower's foot?
 - **Abilities:** what do they look like, and how are they unlocked?

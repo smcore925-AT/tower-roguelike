@@ -5,6 +5,7 @@ Status: `proposed` (waiting for the owner) or `decided`.
 
 | Date | Decision | Status | By | Why |
 |------|----------|--------|----|-----|
+| 2026-11-27 | Run effects on the weapon are lost when leaving the tower (its power fades outside). Gear found can be stored at camp and modified, salvaged or levelled up. The tower has 100 floors | decided | owner | Owner's direction |
 | 2026-11-27 | Art: low-poly 3D, PS1/PS2-era stylised. Controls: keyboard and mouse first, controller and Steam Deck fully supported. Mana powers abilities (not designed yet). Hero fantasy: every build keeps the full moveset | decided | owner | Owner's direction; 3D animations scale better than 2D sprites for many weapon movesets |
 | 2026-11-27 | Run structure: beat the room to unlock the way up. After a floor, push on or return to camp to store finds (run ends, floors regenerate). Weapon, level and moves always kept; run effects on the weapon lost on death; materials partially recovered on death | decided | owner | Push-your-luck tension between climbing and banking loot |
 | 2026-11-27 | Weapons: start with a sword and a short bow; each weapon has its own moveset that levels up with experience. Tower: boss every 10th floor, floors 1–9 natural environments, floor 10 dark forest. Healing from chests and camps; beating a boss unlocks an advance camp to start runs from. Gear and carried weight change movement and knockback. Details in `docs/DESIGN.md` | decided | owner | Owner's game vision |
