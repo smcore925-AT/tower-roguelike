@@ -1,6 +1,6 @@
 # Combat (spec D2)
 
-**Status:** draft, waiting for owner approval. Astra builds from this once approved.
+**Status:** ready for owner approval (all open questions answered). Astra builds from this once approved.
 Numbers marked *(tune)* are starting values; the owner adjusts them while playtesting.
 The bigger game vision (weapon levelling, bosses, gear, crafting) is in [`../DESIGN.md`](../DESIGN.md).
 
@@ -104,7 +104,18 @@ In ScriptableObjects, so the owner can tune them in the Editor without code chan
 
 Not in the first slice: weapon levelling, more weapons, bosses, gear. They're in `DESIGN.md` for later phases.
 
-## Open questions for the owner
+## Controls
 
-1. **Controls:** is keyboard and mouse the main target, gamepad, or both equally? This shapes how directional chains and bow aiming feel.
-2. **Mana:** you mentioned carrying mana. What uses mana: weapon skills, magic, both?
+Keyboard and mouse first; controller and Steam Deck fully supported (owner decision, 2026-11-27).
+
+- Use Unity's Input System with both control schemes from the start.
+- Mouse: attacks and the bow aim at the cursor. Controller: right stick aims; bow aim gets gentle slow-down near hit zones, never auto-lock.
+- Directional chains read the movement input (WASD / left stick) relative to the player's facing.
+
+## Weight and the hero fantasy
+
+Every build keeps the full moveset, including wall runs. Weight changes the style (see `DESIGN.md`), never takes a move away. The player should always feel like THE hero.
+
+## Not in this spec
+
+Abilities and mana are designed separately later.

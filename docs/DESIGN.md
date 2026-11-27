@@ -14,7 +14,8 @@ Crazy ninja moments: slash, run along walls, land precise arrows on weak points,
 2. **The tower is your weapon.** Physics-heavy: slam enemies into walls and trees, throw props, trigger chain reactions, use hazards.
 3. **Every floor feels different.** New environments, enemies and hazards as you climb.
 4. **Weight matters.** Gear and carried items have weight that changes how you move and how hard you get thrown around.
-5. **Grow your weapons.** Weapons gain experience and unlock new moves.
+5. **Grow your weapons.** Weapons gain experience and unlock new moves. Your weapon is what you keep.
+6. **You are THE hero.** The player should always feel badass. Every build, from light ninja to heavy knight, gets the full heroic moveset (wall runs included). Builds change *how* you're awesome, never *whether* you are.
 
 ## Owner vision (2026-11-27)
 
@@ -44,10 +45,28 @@ Crazy ninja moments: slash, run along walls, land precise arrows on weak points,
 - Healing comes from **chest drops** and **camps** at the end of each boss floor.
 - **Advance camps:** beating the floor-10 boss unlocks a camp there. Each new run, the player can start from floor 1 or from an unlocked camp.
 
+### The run: push on or go back to camp (decided 2026-11-27)
+
+- **Climbing:** each floor's way up is locked until the player **beats the room**. At first that means defeating the enemies; later floors can have other conditions (survive, protect, solve, hunt a target).
+- **After finishing a floor**, the player chooses:
+  - **Keep climbing**: more loot and weapon experience, more risk.
+  - **Go back down to camp**: everything found is stored safely. But the run ends: floors **reset and regenerate**, and the next climb starts again from floor 1 or an unlocked advance camp.
+- **What you keep and lose:**
+
+| | Return to camp | Die |
+|---|---|---|
+| Weapon, its level and unlocked moves | Kept | Kept |
+| Effects applied to the weapon during the run | *Open question* | Lost |
+| Materials gathered | Kept (stored at camp) | **Partially** recovered |
+| Other items found during the run | Kept (stored at camp) | Lost |
+
+- This creates the core tension: **push one more floor, or bank what you have?** Sometimes going back is the smart move.
+
 ### Gear and inventory
 
 - Diablo-style inventory and gear, but **gear changes how you play, not just your stats**.
 - Example: a heavy knight build moves slower and dodges less far, but tanks harder hits and doesn't get sent flying.
+- **Heavy is still epic.** The knight can wall run and do everything the ninja can; weight changes the style. Ideas **(proposal)**: a heavy wall run is shorter but ends in a crushing wall-jump slam; heavy dashes become shoulder charges that knock minions aside and break props; a heavy landing sends out a shockwave.
 - **Bag weight:** carrying more healing items or mana makes the bag heavier, which affects movement.
 
 ### Gathering and crafting
@@ -71,12 +90,30 @@ The full vision is a big game. Build it in layers so there's always something pl
 5. **Gathering and crafting**, shops, research.
 6. **More floors, bosses and weapons.**
 
+### Abilities and mana
+
+- **Mana powers abilities.** Details not designed yet. **(proposal)** Abilities could be tied to weapons and unlocked through weapon levels, so they fit the "your weapon is your progression" idea.
+
+## Art direction (decided 2026-11-27)
+
+- **Low-poly 3D**, stylised after **PS1/PS2-era** games.
+- **(proposal)** The look, tuned for fast combat:
+  - Low-resolution rendering scaled up with crisp pixels; small, unfiltered (pixel-sharp) textures; simple vertex colours and fog for mood (great for the dark forest).
+  - **Readability first:** PS1-style vertex wobble and texture warping, if used at all, stay subtle and can be turned off in settings, because fast combat needs a clear picture.
+  - Enemy attack warnings, hit zones and loot stay bright and clear against the retro look.
+- Bonus: this style is cheap to make and runs well on Steam Deck.
+
+## Platforms and controls (decided 2026-11-27)
+
+- **Keyboard and mouse** is the main control scheme.
+- **Controller and Steam Deck** must be fully supported.
+  - Bow aiming on a controller gets gentle aim help (the reticle slows near hit zones), never auto-lock.
+  - UI and text must stay readable on the Steam Deck's 7-inch, 1280×800 screen.
+
 ## Open questions
 
-- **Art style:** 2D sprites in a 3D world, or low-poly 3D characters? (See note below.)
-- **What carries over between runs?** Weapon levels and moves? Gear? Materials? Only camps? This is the biggest roguelike decision.
+- **Returning to camp:** are effects applied to the weapon during the run kept or lost?
+- **How much is "partially" recovered** on death? (e.g. half of materials, or a random portion)
+- **Gear found during a run:** can it be stored at camp and brought on the next climb?
 - **How many floors in total?** (e.g. 30, 50, 100)
-- **What uses mana?**
-- **Controls:** keyboard and mouse, gamepad, or both?
-
-**Note on art style (proposal):** with several weapons, each with many moves, 2D sprites need every move drawn from several directions, which multiplies the art work. Low-poly 3D characters need each animation only once, and they suit physics launches, limping and ragdolls. Claude recommends low-poly 3D characters with a stylised look.
+- **Abilities:** what do they look like, and how are they unlocked?
