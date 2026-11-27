@@ -13,11 +13,12 @@ Full pitch and open questions: [`docs/DESIGN.md`](docs/DESIGN.md). Settled choic
 
 | Agent  | Branch prefix | Typical work |
 |--------|---------------|--------------|
-| Claude | `claude/`     | Assigned per task in `TASKS.md` |
-| Astra  | `astra/`      | Assigned per task in `TASKS.md` |
-| Owner  | —             | Sets priorities, playtests, reviews and merges |
+| Claude | `claude/`     | **Game design** with the owner: design docs and specs in `docs/design/`, plus repo upkeep |
+| Astra  | `astra/`      | **Building the game**: Unity code, prefabs, scenes, implementing approved specs |
+| Owner  | —             | Decides design, opens Unity to test and playtest, reviews and merges |
 
-Roles are not fixed. Whoever the owner assigns a task to owns it.
+The owner can change roles at any time; `TASKS.md` says who owns each task.
+Neither agent can run Unity. The owner compiles and playtests, so every build PR must say how to test it in the Editor.
 
 ## How we work together
 
@@ -29,6 +30,11 @@ Roles are not fixed. Whoever the owner assigns a task to owns it.
 6. **Don't redo the other agent's work.** If you think another agent's code or decision is wrong, say so in the PR or the handoff log and let the owner decide. Don't silently rewrite it.
 7. **Record decisions.** Any choice that affects both agents (engine version, folder layout, naming, a core mechanic) goes in `docs/DECISIONS.md` with the date and who decided. Proposals are marked `proposed` until the owner approves.
 8. **Ask instead of guessing** when a task is unclear or touches game design. Design calls belong to the owner.
+9. **Build from specs.** Astra builds from the owner-approved specs in `docs/design/`. If a spec is missing or unclear, build with placeholder values exposed for tuning and note the gap in the PR.
+
+### If an agent can't write to GitHub
+
+While an agent's GitHub access is read-only, it delivers work as **complete files with their repository paths**, plus a pull request description and a handoff log entry. The owner passes these to Claude, which commits them unchanged on a branch with that agent's prefix (e.g. `astra/run-loop`) and opens the PR. The PR says it was relayed.
 
 ## Engineering conventions
 
