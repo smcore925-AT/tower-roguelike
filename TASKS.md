@@ -9,8 +9,8 @@ See [`AGENTS.md`](AGENTS.md) for how tasks are claimed and handed off.
 | # | Task | Owner | Status | Touches | Notes |
 |---|------|-------|--------|---------|-------|
 | 1 | Confirm engine (Unity + URP) | owner | done | — | Decided 2026-11-27, see `docs/DECISIONS.md` |
-| 2 | Create the Unity project ("Universal 3D" URP template, Unity 6.3 LTS 6000.3.29f1) at the repo root | astra | in progress | `Assets/`, `Packages/`, `ProjectSettings/`, `Scenes/RunLoopTest.unity`, `Data/Core/DefaultRunSettings.asset` | Complete project delivered as a validated zip; Editor mouse playtest passed. Awaiting Claude relay on `astra/unity-project`; mark in review when its PR opens. Exact version in `docs/DECISIONS.md` |
-| 2b | Set up the folder layout from `AGENTS.md`, namespaces and project settings | astra | in progress | `Assets/_Game/`, TMP resources, project settings | Delivered with #2; new Input System only, TMP, serialized scene references, Tower namespace and folder metadata. Awaiting relay PR |
+| 2 | Create the Unity project ("Universal 3D" URP template, Unity 6.3 LTS 6000.3.29f1) at the repo root | astra | in review | `Assets/`, `Packages/`, `ProjectSettings/`, `Scenes/RunLoopTest.unity`, `Data/Core/DefaultRunSettings.asset` | Complete project delivered as a validated zip; Editor mouse playtest passed. PR #6 (relayed). Also contains PR #4. Exact version in `docs/DECISIONS.md` |
+| 2b | Set up the folder layout from `AGENTS.md`, namespaces and project settings | astra | in review | `Assets/_Game/`, TMP resources, project settings | Delivered with #2; new Input System only, TMP, serialized scene references, Tower namespace and folder metadata. In PR #6 |
 | 3 | Core design: the tower's twist, floor themes, difficulty curve, run length (`docs/DESIGN.md`) | claude | todo | docs | Claude drafts options with the owner; owner decides |
 
 ## Design specs (Claude, with the owner)
@@ -51,6 +51,7 @@ Build in this order. Where a spec isn't approved yet, build the systems with pla
 Newest first. One short entry each time an agent stops working.
 Format: `YYYY-MM-DD · agent · task # · what was done · what's next / blocked`
 
+- 2026-11-27 · claude · #2/#2b · Reviewed Astra's project zip (metadata, settings, packages, editor tool, docs) and committed it unchanged on `astra/unity-project`; opened PR #6, which builds on PR #4 · Owner to playtest PR #6 and merge it (that also merges #4)
 - 2026-11-27 · astra · #2/#2b · Delivered Unity 6.3 LTS 6000.3.29f1 (96d2fe17529c) URP project, Mac IL2CPP support, folder layout, TMP and wired RunLoopTest/DefaultRunSettings; #9 scripts unchanged; Editor mouse run-loop tests passed with zero Console warnings/errors · Owner to relay zip and handoff to Claude for astra/unity-project PR, then review/playtest; GitHub write access unavailable; standalone build not tested.
 - 2026-11-27 · claude · #9 · Committed Astra's four run-loop files unchanged on `astra/run-loop` and opened the PR; #2 reassigned to Astra at the owner's request · Astra to create the Unity project (#2); owner to playtest #9 once the project exists
 - 2026-11-27 · astra · #9 · Delivered four complete run-loop scripts with Editor setup/tests; Unity-library compilation and 31 standalone logic checks passed; Editor playtest pending · Claude to commit on astra/run-loop and open PR; owner to create the test scene/settings asset and playtest before merge. (Relayed by owner)
