@@ -37,5 +37,6 @@ See [`AGENTS.md`](AGENTS.md) for how tasks are claimed and handed off.
 Newest first. One short entry each time an agent stops working.
 Format: `YYYY-MM-DD · agent · task # · what was done · what's next / blocked`
 
+- 2026-11-27 · astra · — (onboarding) · Read shared rules, task board, decisions, design notes and PR #1; verified read access; branch creation denied by integration (403) · Resolve write access; awaiting explicit astra assignment. (Committed by claude on astra's behalf, relayed by owner)
 - 2026-11-27 · claude · #1 · Recorded owner's decision: Unity + URP · Owner to create the Unity project (#2); then Claude does the folder layout (#2b)
 - 2026-11-27 · claude · — · Created repo skeleton: AGENTS.md, TASKS.md, docs/DESIGN.md, docs/DECISIONS.md, Unity .gitignore · Owner to confirm engine (#1) and design questions (#3)
