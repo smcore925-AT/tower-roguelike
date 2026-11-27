@@ -1,0 +1,63 @@
+Tasks #2 and #2b — Unity project delivery
+Date: 2026-11-27
+Agent: Astra (relayed by owner; GitHub write access unavailable)
+Exact Editor: Unity 6.3 LTS 6000.3.29f1 (96d2fe17529c), Apple Silicon
+Installed module: Mac Build Support (IL2CPP)
+Resolved packages: URP 17.3.0; Input System 1.20.1; Unity UI 2.0.0 (includes TMP)
+Requested branch: astra/unity-project
+
+PR title
+Create the Unity 6.3 LTS URP project and wire the run-loop test scene
+
+PR description
+Creates the Universal 3D project at the repository root with the Assets/_Game layout, the new Input System, TMP Essential Resources, and generated Unity metadata. Includes the four #9 scripts unchanged from PR #4, plus RunLoopTest and DefaultRunSettings so the run loop can be tested immediately. Pins the owner-approved Editor version to 6000.3.29f1.
+
+Test: open RunLoopTest and click Start Run > Next Floor twice > Die (Test) > Restart. Expect floors 1 > 3 > reached 3 > 1. Graphical Editor mouse testing passed, including a second death/restart and a fresh Play session; Console showed zero warnings and errors. Full owner test steps are below. Standalone Mac/IL2CPP builds and gameplay beyond this harness remain untested/unfinished.
+
+WHAT CHANGED
+- Assets/, Packages/, and ProjectSettings/ sit next to AGENTS.md.
+- Game folders: Scripts, Prefabs, Data, Art, Audio, Scenes.
+- Game namespaces remain Tower.Core and Tower.UI; the project root namespace is Tower.
+- Active Input Handling uses Input System Package (New) only.
+- uGUI + TMP placeholder UI uses InputSystemUIInputModule.
+- RunLoopTest is the enabled build scene. DefaultRunSettings starts at floor 1.
+- Tools > Tower > Create Run Loop Test Scene can recreate the initial test scene; it asks before replacing an existing scene and preserves the settings asset.
+- Exact version is recorded in ProjectVersion.txt and docs/DECISIONS.md.
+
+EDITOR TEST — no manual wiring required
+1. In Unity Hub, choose Add > Add project from disk and select the folder containing Assets/, Packages/, ProjectSettings/, and AGENTS.md. Use 6000.3.29f1 when opening it.
+2. Let package resolution, importing, and shader compilation finish. Open Window > General > Console and confirm there are no red compilation errors.
+3. In the Project window open Assets/_Game/Scenes/RunLoopTest.unity.
+4. Enter Play Mode. Select the Game tab if needed. The start panel should show Tower Run and Start Run.
+5. Click Start Run. The running panel should show Floor 1, Next Floor, and Die (Test).
+6. Click Next Floor twice. The label should read Floor 3, increasing once per click.
+7. Click Die (Test). The run-over panel should show Run Over, the reached floor 3, and Restart.
+8. Click Restart. A new run starts immediately at Floor 1. Repeat steps 6–8 to check that buttons never acquire duplicate listeners.
+9. Stop Play Mode. Select Assets/_Game/Data/Core/DefaultRunSettings.asset and set Starting Floor to 5. Enter Play Mode, start a run, advance, die, and restart. Start and restart should use 5; the next floor should be 6. Stop Play Mode and restore Starting Floor to 1.
+10. Open Edit > Project Settings > Player > Other Settings > Configuration and verify Active Input Handling is Input System Package (New). Under Graphics, verify Default Render Pipeline references the PC_RPAsset URP asset. Quality levels inherit this default when their Render Pipeline Asset override is None.
+11. Stop and re-enter Play Mode; the Start panel should appear again. Resize the Game view and confirm all controls remain visible.
+
+LOCAL INSTALLATION
+The working project is registered in Unity Hub at ~/UnityProjects/tower-roguelike and is already open in the Editor, outside Play Mode. This local location avoids file-read stalls encountered in the Documents copy; the earlier source copy is retained as a backup. Use the UnityProjects copy for ongoing work.
+Unity Hub 4.0.2 downloaded the official Editor and installed Mac Build Support (IL2CPP). Its Editor extraction ran out of temporary disk space, so installation was completed by extracting the same signature-verified official package without the extra staging copy. The resulting Editor launches, reports the exact version above, and passes Unity CLI structural verification with the Mac module. The Editor terms were accepted with the owner's explicit approval.
+
+SCOPE / UNFINISHED
+This is the project foundation and a run-loop harness. Die and Next Floor are test buttons. There is no player, combat, generated floor, camp, loot, persistence, or final art yet. Those remain separate tasks/specs. The placeholder camera is not the final player-camera implementation.
+
+CLAUDE RELAY
+The zip contains the repository-root files directly, not an extra parent directory. It includes .meta files, Packages/, and ProjectSettings/. Library/, Temp/, Logs/, UserSettings/, build output, and .git/ are excluded.
+Use astra/unity-project and open a PR; do not push to main or merge. This delivery was based on the PR #4 head c6e34dd73ca7905a452b2ed69d482ed0cee3f2f3 and main c9a2d0a7e75b986a3fac68b588e4fd9fdfbc8023. Preserve newer repository changes if either branch has moved. The four gameplay scripts are byte-identical to PR #4.
+Set tasks #2 and #2b to in review once the PR is open. Owner reviews and merges. #9 remains in review until the owner accepts it.
+The current TASKS.md keeps #2/#2b in progress because no delivery PR has been opened yet. AGENTS.md still says neither agent can run Unity; this delivery's actual Editor testing was explicitly authorized by the owner. Claude can propose updating that stale capability sentence in a separate repo-upkeep change.
+
+VALIDATION
+- PASS: Editor 6000.3.29f1 (96d2fe17529c) and Mac Build Support (IL2CPP) installed; Unity CLI structural verification passed.
+- PASS: Unity imported the project and compiled its scripts. The scene-generation command completed with exit code 0.
+- PASS: graphical Editor, mouse input: Start Run -> Floor 1; Next Floor -> 2 -> 3; Die (Test) -> Run Over / Floor reached 3; Restart -> Floor 1. A second cycle reached 2, died at 2, and restarted at 1. Every tested advance incremented once.
+- PASS: stopping and re-entering Play Mode returned to the Start panel. The final Console had 0 warnings and 0 errors; Play Mode was stopped before delivery.
+- PASS: serialized scene references, single EventSystem with InputSystemUIInputModule, new-only input setting, Tower root namespace, default starting floor 1, required metadata with unique GUIDs, and original four #9 source hashes checked.
+- Packaging checks: required files, no generated cache/build directories, direct repository-root layout, and ZIP CRC integrity are checked by the delivery packager. SHA256SUMS.txt accompanies the zip.
+- Not exercised: the alternate Starting Floor 5 and resize checks in the owner test checklist, controller/Steam Deck input, or a standalone Mac/IL2CPP player build. No player build is included.
+
+HANDOFF LOG LINE
+2026-11-27 · astra · #2/#2b · Delivered Unity 6.3 LTS 6000.3.29f1 (96d2fe17529c) URP project, Mac IL2CPP support, folder layout, TMP and wired RunLoopTest/DefaultRunSettings; #9 scripts unchanged; Editor mouse run-loop tests passed with zero Console warnings/errors · Owner to relay zip and handoff to Claude for astra/unity-project PR, then review/playtest; GitHub write access unavailable; standalone build not tested.
