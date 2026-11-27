@@ -20,7 +20,7 @@ Each spec lives in `docs/design/` and is what Astra builds from. Owner approves 
 | # | Spec | Owner | Status | Feeds build task | Notes |
 |---|------|-------|--------|------------------|-------|
 | D1 | Player and camera: controls, movement, dodge, camera angle | claude | todo | #4 | Camera decided: top-down angled; moveset drafted in `docs/design/combat.md` |
-| D2 | Combat: sword moveset, bow, hit zones, physics, hit feedback | claude | in review | #5 | `docs/design/combat.md`; open questions answered, waiting for owner approval |
+| D2 | Combat: sword moveset, bow, hit zones, physics, hit feedback | claude | done | #5 | Approved 2026-11-27: `docs/design/combat.md` |
 | D3 | First enemy: behaviour, attacks, tells, stats | claude | todo | #6 | |
 | D4 | Floors: room templates, layout rules, difficulty scaling | claude | todo | #7 | |
 | D5 | Starter items: 3 sample items, item data fields | claude | todo | #8 | |

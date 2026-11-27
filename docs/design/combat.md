@@ -1,6 +1,6 @@
 # Combat (spec D2)
 
-**Status:** ready for owner approval (all open questions answered). Astra builds from this once approved.
+**Status:** approved by the owner (2026-11-27). Astra builds from this.
 Numbers marked *(tune)* are starting values; the owner adjusts them while playtesting.
 The bigger game vision (weapon levelling, bosses, gear, crafting) is in [`../DESIGN.md`](../DESIGN.md).
 
