@@ -17,13 +17,13 @@ See [`AGENTS.md`](AGENTS.md) for how tasks are claimed and handed off.
 
 Each spec lives in `docs/design/` and is what Astra builds from. Owner approves a spec before Astra builds it.
 
-| # | Spec | Owner | Status | Feeds build task |
-|---|------|-------|--------|------------------|
-| D1 | Player and camera: controls, movement, dodge, camera angle | claude | todo | #4 |
-| D2 | Combat: attacks, combos, hit feedback, damage numbers | claude | todo | #5 |
-| D3 | First enemy: behaviour, attacks, tells, stats | claude | todo | #6 |
-| D4 | Floors: room templates, layout rules, difficulty scaling | claude | todo | #7 |
-| D5 | Starter items: 3 sample items, item data fields | claude | todo | #8 |
+| # | Spec | Owner | Status | Feeds build task | Notes |
+|---|------|-------|--------|------------------|-------|
+| D1 | Player and camera: controls, movement, dodge, camera angle | claude | todo | #4 | Camera decided: top-down angled; moveset drafted in `docs/design/combat.md` |
+| D2 | Combat: sword moveset, bow, hit zones, physics, hit feedback | claude | done | #5 | Approved 2026-11-27: `docs/design/combat.md` |
+| D3 | First enemy: behaviour, attacks, tells, stats | claude | todo | #6 | |
+| D4 | Floors: room templates, layout rules, difficulty scaling | claude | todo | #7 | |
+| D5 | Starter items: 3 sample items, item data fields | claude | todo | #8 | |
 
 ## Build (Astra; first playable slice)
 
@@ -31,7 +31,7 @@ Build in this order. Where a spec isn't approved yet, build the systems with pla
 
 | # | Task | Owner | Status | Touches | Notes |
 |---|------|-------|--------|---------|-------|
-| 9 | Run loop: start, die, restart; floor counter | astra | todo | | No design spec needed |
+| 9 | Run loop: start, die, restart; floor counter | astra | todo | | Keep simple, but leave room for the run structure in `DESIGN.md` (beat the room to unlock stairs, return to camp) |
 | 4 | Player controller: move, dodge, camera | astra | todo | | Spec D1 |
 | 5 | Basic melee combat with hit feedback (hit-stop, shake, knockback) | astra | todo | | Spec D2 |
 | 6 | One enemy type with chase and attack AI | astra | todo | | Spec D3 |
@@ -51,6 +51,9 @@ Build in this order. Where a spec isn't approved yet, build the systems with pla
 Newest first. One short entry each time an agent stops working.
 Format: `YYYY-MM-DD · agent · task # · what was done · what's next / blocked`
 
+- 2026-11-27 · claude · D2 · Recorded art direction (low-poly PS1/PS2), controls, run structure and what's kept between runs; combat spec ready for approval · Owner to approve and merge PR #3; next Claude drafts the dark forest boss and first enemies (D3)
+- 2026-11-27 · claude · D2 · Updated combat spec with owner's vision (sword chains, bow, hit zones, wall run, player launch) and captured the full game vision in `docs/DESIGN.md` · Owner to decide art style and what carries over between runs
+- 2026-11-27 · claude · D2 · Recorded combat direction (top-down, minion+elite mix, physics-heavy) and drafted `docs/design/combat.md` · Owner to answer the spec's open questions and approve it; then Astra can build #5
 - 2026-11-27 · claude · — · Owner set roles: Claude designs with the owner, Astra builds. Reassigned tasks, added design specs D1–D5, documented the relay workflow for Astra · Owner to create the Unity project (#2); Claude to start #3 with the owner
 - 2026-11-27 · astra · — (onboarding) · Read shared rules, task board, decisions, design notes and PR #1; verified read access; branch creation denied by integration (403) · Resolve write access; awaiting explicit astra assignment. (Committed by claude on astra's behalf, relayed by owner)
 - 2026-11-27 · claude · #1 · Recorded owner's decision: Unity + URP · Owner to create the Unity project (#2); then Claude does the folder layout (#2b)
