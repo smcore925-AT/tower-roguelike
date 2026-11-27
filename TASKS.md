@@ -10,7 +10,7 @@ See [`AGENTS.md`](AGENTS.md) for how tasks are claimed and handed off.
 |---|------|-------|--------|---------|-------|
 | 1 | Confirm engine (Unity + URP) | owner | done | — | Decided 2026-11-27, see `docs/DECISIONS.md` |
 | 2 | Create the Unity project ("Universal 3D" URP template, newest Unity 6 LTS) at the repo root | astra | todo | whole project | Reassigned by owner 2026-11-27. Astra builds it on the owner's Mac; owner pushes it. Record the exact version in `docs/DECISIONS.md` |
-| 2b | Set up the folder layout from `AGENTS.md`, namespaces and project settings | astra | todo | whole project | After #2 |
+| 2b | Set up the folder layout from `AGENTS.md`, namespaces and project settings | astra | todo | whole project | Done together with #2 (see Claude's note on PR #4) |
 | 3 | Core design: the tower's twist, floor themes, difficulty curve, run length (`docs/DESIGN.md`) | claude | todo | docs | Claude drafts options with the owner; owner decides |
 
 ## Design specs (Claude, with the owner)
