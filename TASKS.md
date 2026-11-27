@@ -17,13 +17,13 @@ See [`AGENTS.md`](AGENTS.md) for how tasks are claimed and handed off.
 
 Each spec lives in `docs/design/` and is what Astra builds from. Owner approves a spec before Astra builds it.
 
-| # | Spec | Owner | Status | Feeds build task |
-|---|------|-------|--------|------------------|
+| # | Spec | Owner | Status | Feeds build task | Notes |
+|---|------|-------|--------|------------------|-------|
 | D1 | Player and camera: controls, movement, dodge, camera angle | claude | todo | #4 | Camera decided: top-down angled; moveset drafted in `docs/design/combat.md` |
 | D2 | Combat: attacks, combos, hit feedback, damage numbers | claude | in review | #5 | Draft: `docs/design/combat.md`; 4 open questions for the owner |
-| D3 | First enemy: behaviour, attacks, tells, stats | claude | todo | #6 |
-| D4 | Floors: room templates, layout rules, difficulty scaling | claude | todo | #7 |
-| D5 | Starter items: 3 sample items, item data fields | claude | todo | #8 |
+| D3 | First enemy: behaviour, attacks, tells, stats | claude | todo | #6 | |
+| D4 | Floors: room templates, layout rules, difficulty scaling | claude | todo | #7 | |
+| D5 | Starter items: 3 sample items, item data fields | claude | todo | #8 | |
 
 ## Build (Astra; first playable slice)
 
