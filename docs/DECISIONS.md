@@ -5,6 +5,7 @@ Status: `proposed` (waiting for the owner) or `decided`.
 
 | Date | Decision | Status | By | Why |
 |------|----------|--------|----|-----|
+| 2026-11-27 | Pin the project to Unity 6.3 LTS **6000.3.29f1** (revision `96d2fe17529c`), with URP. Initial Mac setup uses the Apple Silicon Editor plus Mac Build Support (IL2CPP). Use the Universal 3D template, new Input System only, and TMP Essential Resources | decided | owner | Owner explicitly selected this version and authorized tasks #2/#2b after confirming that 6000.6.10f1 is an Update release |
 | 2026-11-27 | Run loop behaviour: explicit Start, configurable starting floor, floors advance only while running, death keeps the reached floor, Restart begins a new run at once. Placeholder UI uses uGUI + TextMeshPro with the new Input System (mouse first) | proposed | astra | From task #9; becomes decided when the owner merges the run-loop PR |
 | 2026-11-27 | Run effects on the weapon are lost when leaving the tower (its power fades outside). Gear found can be stored at camp and modified, salvaged or levelled up. The tower has 100 floors | decided | owner | Owner's direction |
 | 2026-11-27 | Art: low-poly 3D, PS1/PS2-era stylised. Controls: keyboard and mouse first, controller and Steam Deck fully supported. Mana powers abilities (not designed yet). Hero fantasy: every build keeps the full moveset | decided | owner | Owner's direction; 3D animations scale better than 2D sprites for many weapon movesets |
